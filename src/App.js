@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import GlobalStyle from "./styles/GlobalStyles";
+import CodePage from "./pages/CodePage";
+import ChatPage from "./pages/ChatPage";
+import { useState } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	return (
+		<div>
+			<BrowserRouter>
+				<GlobalStyle />
+				<Routes>
+					<Route path="/" element={<CodePage />} />
+					<Route path="/chat" element={<ChatPage />} />
+				</Routes>
+			</BrowserRouter>
+		</div>
+	);
 }
 
 export default App;
