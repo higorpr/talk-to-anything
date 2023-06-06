@@ -22,7 +22,7 @@ export default function UserInput() {
 				/>
 				<StyledIcon>
 					<IconContext.Provider value={{ size: "25px" }}>
-						<TbSend />
+						<StyledTbSend />
 					</IconContext.Provider>
 				</StyledIcon>
 			</ChatArea>
@@ -60,8 +60,8 @@ const StyledInput = styled.textarea`
 	resize: none;
 	border: none;
 	padding: 5px;
-    box-sizing: border-box;
-    box-shadow: ;
+	box-sizing: border-box;
+	box-shadow: ;
 `;
 
 const StyledIcon = styled.div`
@@ -73,4 +73,8 @@ const StyledIcon = styled.div`
 	border-bottom-right-radius: 10px;
 	min-height: 100%;
 	width: 30px;
+`;
+
+const StyledTbSend = styled(TbSend)`
+    cursor: pointer;
 `;
