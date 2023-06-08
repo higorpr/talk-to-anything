@@ -36,7 +36,7 @@ const StyledComp = styled.div`
 	align-items: center;
 	min-height: 10%;
 	width: 100vw;
-	background-color: #6497b1;
+	background-color: #;
 `;
 
 const ChatArea = styled.div`
@@ -48,7 +48,7 @@ const ChatArea = styled.div`
 
 const StyledInput = styled.textarea`
 	width: 90vw;
-	background-color: #b3cde0;
+	background-color: #f3fff4;
 	resize: vertical;
 	min-height: 100%;
 	font-size: 15px;
@@ -60,12 +60,13 @@ const StyledInput = styled.textarea`
 	resize: none;
 	border: none;
 	padding: 5px;
+	padding-left: 10px;
 	box-sizing: border-box;
-	box-shadow: ;
+	
 `;
 
 const StyledIcon = styled.div`
-	background-color: #b3cde0;
+	background-color: #f3fff4;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -76,5 +77,6 @@ const StyledIcon = styled.div`
 `;
 
 const StyledTbSend = styled(TbSend)`
-    cursor: pointer;
+	cursor: pointer;
+	margin-right: 5px;
 `;

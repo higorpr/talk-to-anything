@@ -30,7 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	/* background-color: #333333; */
+	background-color: #001122;
 	width: 100%;
 	height: 100%;
 	font-family: 'Lato', sans-serif;
