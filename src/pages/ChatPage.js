@@ -1,38 +1,59 @@
 import styled from "styled-components";
 import UserInput from "../components/UserInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Message from "../components/ChatBoxes/Message";
+import useGetChat from "../hooks/api/useGetChat";
 
 export default function ChatPage() {
 	const [chatStarted, setChatStarted] = useState(false);
-	const nowDate = new Date().getTime();
-	const messages = [
-		{
-			from: "Higor",
-			to: "TalkToAnything",
-			message: "Hello!",
-			sent: nowDate,
-		},
-		{
-			from: "TalkToAnything",
-			to: "Higor",
-			message: "Hello There!",
-			sent: nowDate,
-		},
-		{
-			from: "Higor",
-			to: "TalkToAnything",
-			message: "Are you Obi Wan Kenobi? KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
-			sent: nowDate,
-		},
-		{
-			from: "TalkToAnything",
-			to: "Higor",
-			message:
-				"Are you Obi Wan Kenobi? HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
-			sent: nowDate,
-		},
-	];
+	const [messages, setMessages] = useState([]);
+	const [updatePage, setUpdatePage] = useState(false);
+	const { getChat } = useGetChat();
+
+	async function retrieveChat(user) {
+		try {
+			const chat = await getChat(user);
+			console.log(chat);
+			setMessages(chat);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	useEffect(() => {
+		const user = "You";
+		retrieveChat(user);
+	}, [updatePage]);
+
+	// const nowDate = new Date().getTime();
+	// const messages = [
+	// 	{
+	// 		from: "Higor",
+	// 		to: "TalkToAnything",
+	// 		text: "Hello!",
+	// 		sent: nowDate,
+	// 	},
+	// 	{
+	// 		from: "TalkToAnything",
+	// 		to: "Higor",
+	// 		text: "Hello There!",
+	// 		sent: nowDate,
+	// 	},
+	// 	{
+	// 		from: "Higor",
+	// 		to: "TalkToAnything",
+	// 		text:
+	// 			"Are you Obi Wan Kenobi? KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+	// 		sent: nowDate,
+	// 	},
+	// 	{
+	// 		from: "TalkToAnything",
+	// 		to: "Higor",
+	// 		text:
+	// 			"Are you Obi Wan Kenobi? HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
+	// 		sent: nowDate,
+	// 	},
+	// ];
 	// const messages = [];
 	return (
 		<StyledPage>
@@ -46,11 +67,11 @@ export default function ChatPage() {
 
 			<ChatContainer>
 				{messages.map((m) => (
-					<Message from={m.from} text={m.message} />
+					<Message key={m.id} from={m.from} text={m.text} />
 				))}
 			</ChatContainer>
 
-			<UserInput />
+			<UserInput updatePage={updatePage} setUpdatePage={setUpdatePage} />
 		</StyledPage>
 	);
 }
@@ -78,12 +99,12 @@ const StyledHeader = styled.div`
 	justify-content: center;
 	align-items: center;
 	color: white;
-	/* margin-top: 10px; */
 	background-color: #0c232f;
 	width: 100%;
 	padding: 10px 0;
-	/* border-bottom: 1px solid white; */
-	box-shadow: ;
+	position: fixed;
+	top: 0;
+	left: 0;
 `;
 
 const ChatContainer = styled.div`
@@ -94,4 +115,5 @@ const ChatContainer = styled.div`
 	margin-top: 15px;
 	padding: 0 10px;
 	box-sizing: border-box;
+	z-index: 0;
 `;

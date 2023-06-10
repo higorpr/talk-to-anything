@@ -2,13 +2,29 @@ import styled from "styled-components";
 import { TbSend } from "react-icons/tb";
 import { IconContext } from "react-icons";
 import { useState } from "react";
+import useSendUserMessage from "../hooks/api/useSendUserMessage";
 
-export default function UserInput() {
+export default function UserInput({ updatePage, setUpdatePage }) {
 	const [userMessage, setUserMessage] = useState("");
+	const { sendUserMessage } = useSendUserMessage();
 
 	function handleChange(event) {
 		event.preventDefault();
 		setUserMessage(event.target.value);
+	}
+
+	async function sendMessage(event) {
+		event.preventDefault();
+		if (userMessage !== "") {
+			try {
+				const user = "You";
+				const response = await sendUserMessage(user, userMessage);
+				console.log(response);
+				setUpdatePage(!updatePage);
+			} catch (err) {
+				console.log(err);
+			}
+		}
 	}
 
 	return (
@@ -22,7 +38,7 @@ export default function UserInput() {
 				/>
 				<StyledIcon>
 					<IconContext.Provider value={{ size: "25px" }}>
-						<StyledTbSend />
+						<StyledTbSend onClick={sendMessage} />
 					</IconContext.Provider>
 				</StyledIcon>
 			</ChatArea>
@@ -36,47 +52,48 @@ const StyledComp = styled.div`
 	align-items: center;
 	min-height: 10%;
 	width: 100vw;
-	background-color: #;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+	/* background-color: #001122; */
+	background-color: goldenrod;
 `;
 
 const ChatArea = styled.div`
 	display: flex;
-	height: 70%;
-	width: 95%;
+	min-height: 90%;
+	width: 98%;
 	align-items: center;
+	position: relative;
 `;
 
 const StyledInput = styled.textarea`
-	width: 90vw;
+	width: 100%;
 	background-color: #f3fff4;
 	resize: vertical;
 	min-height: 100%;
 	font-size: 15px;
 	display: flex;
 	box-sizing: border-box;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
+	border-radius: 10px;
 	outline: none;
 	resize: none;
 	border: none;
-	padding: 5px;
-	padding-left: 10px;
+	padding: 5px 35px 5px 10px;
 	box-sizing: border-box;
-	
 `;
 
 const StyledIcon = styled.div`
-	background-color: #f3fff4;
+	/* background-color: #f3fff4; */
+	/* background-color: yellow; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	min-height: 100%;
-	width: 30px;
+	position: absolute;
+	right: 5px;
 `;
 
 const StyledTbSend = styled(TbSend)`
 	cursor: pointer;
-	margin-right: 5px;
 `;
