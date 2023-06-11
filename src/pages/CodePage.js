@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function CodePage() {
 	return (
 		<StyledPage>
-			<QRCode value={"https://google.com"} size={250}/>
+			<QRCode value={"https://google.com"} size={250} />
 		</StyledPage>
 	);
 }
@@ -15,4 +15,5 @@ const StyledPage = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-color: #ffffff;
 `;

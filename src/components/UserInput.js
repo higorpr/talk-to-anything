@@ -13,9 +13,12 @@ export default function UserInput({ updatePage, setUpdatePage }) {
 		setUserMessage(event.target.value);
 	}
 
-	async function sendMessage(event) {
-		event.preventDefault();
-		if (userMessage !== "") {
+	async function sendMessage(event = null) {
+		if (event) {
+			event.preventDefault();
+		}
+
+		if (userMessage.trim() !== "") {
 			try {
 				const user = "You";
 				const response = await sendUserMessage(user, userMessage);
@@ -24,6 +27,16 @@ export default function UserInput({ updatePage, setUpdatePage }) {
 			} catch (err) {
 				console.log(err);
 			}
+		} else {
+			setUserMessage("");
+		}
+	}
+
+	function checkKey(event) {
+		if (event.key === "Enter") {
+			console.log(event.key);
+			// console.log("test");
+			sendMessage();
 		}
 	}
 
@@ -35,6 +48,7 @@ export default function UserInput({ updatePage, setUpdatePage }) {
 					value={userMessage}
 					onChange={handleChange}
 					wrap="hard"
+					onKeyUp={checkKey}
 				/>
 				<StyledIcon>
 					<IconContext.Provider value={{ size: "25px" }}>
@@ -50,14 +64,15 @@ const StyledComp = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 10%;
+	min-height: 60px;
 	width: 100vw;
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	z-index: 2;
-	/* background-color: #001122; */
-	background-color: goldenrod;
+	background-color: #001122;
+	/* display: none; */
+	/* background-color: goldenrod; */
 `;
 
 const ChatArea = styled.div`
