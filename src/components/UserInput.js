@@ -3,10 +3,12 @@ import { TbSend } from "react-icons/tb";
 import { IconContext } from "react-icons";
 import { useState } from "react";
 import useSendUserMessage from "../hooks/api/useSendUserMessage";
+import { TailSpin } from "react-loader-spinner";
 
 export default function UserInput({ updatePage, setUpdatePage }) {
 	const [userMessage, setUserMessage] = useState("");
 	const { sendUserMessage } = useSendUserMessage();
+	const [loading, setLoading] = useState(false);
 
 	function handleChange(event) {
 		event.preventDefault();
@@ -19,10 +21,12 @@ export default function UserInput({ updatePage, setUpdatePage }) {
 		}
 
 		if (userMessage.trim() !== "") {
+			setLoading(true);
 			try {
 				const user = "You";
-				const response = await sendUserMessage(user, userMessage);
-				console.log(response);
+				await sendUserMessage(user, userMessage);
+				setUserMessage("");
+				setLoading(false);
 				setUpdatePage(!updatePage);
 			} catch (err) {
 				console.log(err);
@@ -49,11 +53,16 @@ export default function UserInput({ updatePage, setUpdatePage }) {
 					onChange={handleChange}
 					wrap="hard"
 					onKeyUp={checkKey}
+					disabled={loading}
 				/>
 				<StyledIcon>
-					<IconContext.Provider value={{ size: "25px" }}>
-						<StyledTbSend onClick={sendMessage} />
-					</IconContext.Provider>
+					{loading ? (
+						<TailSpin height="25" width="25" color="#000000" />
+					) : (
+						<IconContext.Provider value={{ size: "25px" }}>
+							<StyledTbSend onClick={sendMessage} />
+						</IconContext.Provider>
+					)}
 				</StyledIcon>
 			</ChatArea>
 		</StyledComp>
@@ -97,6 +106,10 @@ const StyledInput = styled.textarea`
 	border: none;
 	padding: 5px 35px 5px 10px;
 	box-sizing: border-box;
+
+	&:disabled {
+		background-color: #d3d3d3;
+	}
 `;
 
 const StyledIcon = styled.div`

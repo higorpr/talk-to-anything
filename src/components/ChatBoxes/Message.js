@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export default function Message({ text, from }) {
 	let backgroundColor = "#9560e8";
-	// let backgroundColor = "#ff3da9";
-
 	let position = "flex-start";
 	let customMargin = "0 5px 0 0";
 	let fontColor = "#f3fff4";
