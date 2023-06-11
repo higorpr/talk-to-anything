@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyles";
 import CodePage from "./pages/CodePage";
 import ChatPage from "./pages/ChatPage";
-import { useState } from "react";
 
 function App() {
 
@@ -11,8 +10,8 @@ function App() {
 			<BrowserRouter>
 				<GlobalStyle />
 				<Routes>
-					<Route path="/" element={<CodePage />} />
-					<Route path="/chat" element={<ChatPage />} />
+					<Route path="/" element={<ChatPage />} />
+					{/* <Route path="/chat" element={<ChatPage />} /> */}
 				</Routes>
 			</BrowserRouter>
 		</div>
